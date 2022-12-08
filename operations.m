@@ -10,22 +10,9 @@ terms = 5;
 
 %Signal Generation: Time Domain and Frequency Domain
 v_t = eval(ExponentialFourierSeriesJF(time_window, terms*2));
-v_f = fft(v_t);
 
 figure
-%Plot the Signal Generation
-subplot(2,1,1); plot(1000.*time_window, v_t)
-title("Fourier Series Generation of Input Signal")
-xlabel("t (ms)")
-ylabel("v(t)")
-
-%Plot the Frequency Generation
-f = (0:length(v_f)-1)*f_s/length(v_f);   % Frequency Window
-v_fsub = abs(v_f);
-subplot(2,1,2); stem(f(1:30), v_fsub(1:30))
-title("Single-Sided Amplitude Spectrum of Input Signal")
-xlabel("f (Hz)")
-ylabel("|V(f)|")
+FourierTransformJF(time_window, v_t, f_s);
 
 %Part 2: Analog 
 figure
@@ -38,7 +25,7 @@ FrequencyModulationJF(time_window, v_t, f_s);
 
 %PCM
 figure
-AnalogToDigitalJF(time_window, v_t);
+AnalogToDigitalJF(time_window, v_t, f_s);
 
 %ASK
 %FSK

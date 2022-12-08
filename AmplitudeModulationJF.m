@@ -13,6 +13,7 @@ function vdsb = AmplitudeModulationJF(time_window, v_t, fs)
     
     % SSB AM 
     vssbu = highpass(real(vdsb), f_c, fs, ImpulseResponse="iir",Steepness=0.95);
+    
     subplot(2,3,2); plot(time_window, vssbu)
     
     % Large Carrier AM 

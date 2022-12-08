@@ -43,16 +43,6 @@ function pfs = ExponentialFourierSeriesJF(time_window, terms)
 
 end
 
-% Spectrurm Creation
-% Fs = 50000;
-% time_window = 0: 1/Fs :0.01;
-% NFFT = length(vdsb);
-% Y = fft(vdsb,NFFT);
-% F = ((0:1/NFFT:1-1/NFFT)*Fs).';
-% Vmag = abs(Y);
-% Vphase = unwrap(angle(Y));
-% plot(F, Vmag);
-
 
 
 
