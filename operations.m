@@ -30,6 +30,7 @@ ylabel("|V(f)|")
 %Part 2: Analog 
 figure
 AmplitudeModulationJF(time_window, v_t, f_s);
+
 figure 
 FrequencyModulationJF(time_window, v_t, f_s);
 

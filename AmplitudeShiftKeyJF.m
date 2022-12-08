@@ -11,7 +11,7 @@ f_s = 5000;
 f_trs = 100000;
 
 t = 0: 1/f_s :1e-2;
-signal = real(eval(ExponentialFourierSeriesJF(t)));
+signal = real(eval(ExponentialFourierSeriesJF(t, 5)));
 sampled = round(127*250*signal + 127);
 
 t_ask = 0:(1/f_trs):(1/f_s);

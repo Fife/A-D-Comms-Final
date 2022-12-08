@@ -10,7 +10,7 @@ f_s = 500;
 f_trs = 100000;
 
 t = 0: 1/f_s :1e-2;
-signal = 250*real(eval(ExponentialFourierSeriesJF(t)));
+signal = 250*real(eval(ExponentialFourierSeriesJF(t, 5)));
 sampled = round(127*signal + 127);
 
 t_ask = 0:(1/f_trs):(1/f_s);
@@ -37,6 +37,7 @@ for i = 1:length(sampled)
         elseif coef == 3
             phase = -pi/4;
         end
+        
         %Calculate start and end times for the bit
         start_time = (i-1) * (1/f_s);
         end_time = start_time + 1/f_s;
@@ -49,5 +50,6 @@ for i = 1:length(sampled)
     end
 end
 
+figure
 subplot(2,1,1);stairs(t, sampled)
 subplot(2,1,2);plot(linspace(0, 1e-2, length(output)), output)
