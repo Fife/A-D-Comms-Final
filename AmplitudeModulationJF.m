@@ -14,8 +14,10 @@ function vdsb = AmplitudeModulationJF(time_window, v_t, fs)
     % SSB AM 
 
     v_f = abs(fft(vdsb));
+
     v_f([1:50]) = 0;
     v_f([451:500]) = 0;
+    
     v_f = v_f .*0.002;
     vssbu = fft(v_f);
     
