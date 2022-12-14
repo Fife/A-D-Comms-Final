@@ -15,9 +15,9 @@ function [vdsb, vssbu, vlc] = AmplitudeModulationJF(time_window, v_t, fs)
 
     v_f = abs(fft(vdsb));
     v_f([1:50]) = 0;
-    v_f([752:end]) = 0;
+    v_f([1551:end]) = 0;
     v_f = v_f .*0.002;
-    vssbu = fft(v_f);
+    vssbu = real(ifft(v_f));
     
 
     %vssbu = highpass(real(vdsb), f_c-100, fs, ImpulseResponse="iir",Steepness=0.95);

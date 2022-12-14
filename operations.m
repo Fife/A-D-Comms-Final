@@ -4,9 +4,10 @@ clear
 
 %Part 1: Fourier Series
 %Sampling Frequencies and Time Windows
-f_s = 80000;                           % 80kHz Sampling Frequency
+f_s = 160000;                           % 160kHz Sampling Frequency
 time_window = 0:1/f_s:0.01-1/f_s;       % Generate Time window from sampling frequency
 terms = 5;
+f_s_adc = 4000;
 
 %Signal Generation: Time Domain and Frequency Domain
 v_t = real(eval(ExponentialFourierSeriesJF(time_window, terms*2)));
@@ -17,11 +18,13 @@ title("Signal Generation With Fourier Series");
 xlabel("t (ms)");
 ylabel("mV");
 
+
 [freq, mag] = spectrum(v_t, f_s, time_window);
-subplot(2,1,2);stem(freq(1:40), mag(1:40));
+subplot(2,1,2);stem(freq, mag);
 title("Single-Sided Spectrum of Signal Signal")
 xlabel("f (Hz)")
 ylabel("|V(f)|")
+
 
 %Part 2: Analog 
 figure
@@ -38,20 +41,29 @@ FrequencyDemodulation(time_window, v_t, f_s, vfm)
 
 %PCM
 figure
-[time, output] = AnalogToDigitalJF(time_window, v_t, f_s);
+[time, output] = AnalogToDigitalJF(time_window, v_t, f_s, f_s_adc);
 figure
 DigitalToAnalog(output, time_window, f_s, v_t);
 
 %ASK
 figure
-AmplitudeShiftKeyJF(time_window, output, f_s)
+AmplitudeShiftKeyJF(time_window, output, f_s, f_s_adc)
+figure
+ASKDemodulation(time_window, output, f_s, f_s_adc)
+
 %FSK
-FrequencyShiftKeyJF;
+figure
+fsk = FrequencyShiftKeyJF(time_window, output, f_s, f_s_adc, v_t);
+figure
+FSKDemod(time_window, fsk, output, f_s, f_s_adc)
+
+
 %BPSK
-BinaryPhaseShiftKeyJF;
+figure
+bpsk = BinaryPhaseShiftKeyJF(time_window, output, f_s, f_s_adc, v_t);
+figure
+BPSKDemod(time_window, bpsk, output, f_s, f_s_adc);
 
-
-%Part 4: M-ary
-%QPSK
-QuadriphaseShiftKeying;
-
+% %Part 4: M-ary
+% %QPSK
+% QuadriphaseShiftKeying;

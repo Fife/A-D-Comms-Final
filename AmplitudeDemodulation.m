@@ -1,6 +1,6 @@
 
 %Analog Amplitude demodulation
-function [vdsbd,vssbd,vlcd] = AmplitudeDemodulation(time_window, vdsb, vssb,vlc, fs)
+function [vdsbd,vssbd,vlcd] = AmplitudeDemodulation(time_window, vdsb, vssb, vlc, fs)
     f_c = 5000;
     carrier = cos(2*pi*f_c*time_window);
     
@@ -14,12 +14,16 @@ function [vdsbd,vssbd,vlcd] = AmplitudeDemodulation(time_window, vdsb, vssb,vlc,
     ylabel("v(t)")
 
     % vssb demodulation 
-    vssbd= carrier.*vssb;
-    vssbd = lowpass(real(vssbd), 5000, fs, ImpulseResponse="iir",Steepness=0.95);
+
+    [freq, mag] = spectrum(vssb, fs, time_window);
+    mag = circshift(mag, -51);
+    [freq, mag] = spectrum(mag, fs, time_window);
     subplot(3,1,2);
-    plot(vssbd); 
+    plot(freq, mag); 
+
     xlabel("t(ms)")
     ylabel("v(t)")
+
     %stem(vssbd);
     % v_f = abs(fft(vssb));
     % for i= 51:2:71
@@ -35,7 +39,7 @@ function [vdsbd,vssbd,vlcd] = AmplitudeDemodulation(time_window, vdsb, vssb,vlc,
     title("Single sideband demodulation")
     
     % vlc demodulation 
-    vlcd = vlc(1 : 16 : fs/100);
+    vlcd = vlc(1 : 32 : fs/100);
     subplot(3,1,3);
     plot(vlcd);
     title("LC demodulation")

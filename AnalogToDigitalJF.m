@@ -2,9 +2,8 @@
 % CPE 3620 Project 
 % Analog to Digital- Eight Bit Sampling
 
-function [time, output] = AnalogToDigitalJF(time_window, v_t, f_s)
+function [time, output] = AnalogToDigitalJF(time_window, v_t, f_s, f_s_adc)
     %Analog to Digital Encoding
-    f_s_adc = 4000;
     sample_signal = 0.5*square(2*pi*f_s_adc*time_window, 0.5) + 0.5;
     signal = real(v_t);
     sampled = (signal.*sample_signal);
@@ -30,7 +29,7 @@ function [time, output] = AnalogToDigitalJF(time_window, v_t, f_s)
     
     %Sampled Plot
     subplot(4,2,3);stem(time_window*1000, sample_signal)
-    title("Periodic Sampling Impluse of 5kHz")
+    title("Periodic Sampling Impluse of 4kHz")
     xlabel("t (ms)")
     ylabel("Logic Level")
 
@@ -45,9 +44,8 @@ function [time, output] = AnalogToDigitalJF(time_window, v_t, f_s)
 
     %Resample Signal to original timescale and encode to Digital 
 
-    nz_sampled = repelem(sampled,f_s/(20*f_s_adc));
 
-    nz_sampled = round(250*128.*nz_sampled + 127); 
+    nz_sampled = round(250*128.*sampled + 127); 
 
     [freq, mag] = spectrum(sampled, f_s, time_window);
     subplot(2,2,4);stem(freq(1:60), mag(1:60));

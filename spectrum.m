@@ -1,6 +1,5 @@
 function [freq, mag] = spectrum(v_t, fs, time_window)
     Y = real(fft(v_t));   
-
     L = length(time_window);             % Length of signal
     P2 = abs(Y/L);
     mag = P2(1:L/2+1);
