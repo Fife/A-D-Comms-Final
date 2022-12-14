@@ -2,7 +2,7 @@
 %CPE 3620 Project 
 %Frequency Modulation
 
-function FrequencyModulationJF(time_window, v_t, fs)
+function vfm = FrequencyModulationJF(time_window, v_t, fs)
     fm = 2000;
     signal = 250.*v_t;
     vc = sin(2*pi*fm*time_window);

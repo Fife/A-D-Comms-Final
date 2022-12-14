@@ -2,7 +2,7 @@
 % CPE 3620 Project 
 % Amplitude Modulation
 
-function vdsb = AmplitudeModulationJF(time_window, v_t, fs)
+function [vdsb, vssbu, vlc] = AmplitudeModulationJF(time_window, v_t, fs)
     syms carrier(t)
     f_c = 5000;
     carrier(t)= cos(2*pi*f_c*t);
@@ -14,10 +14,8 @@ function vdsb = AmplitudeModulationJF(time_window, v_t, fs)
     % SSB AM 
 
     v_f = abs(fft(vdsb));
-
     v_f([1:50]) = 0;
-    v_f([451:500]) = 0;
-    
+    v_f([752:end]) = 0;
     v_f = v_f .*0.002;
     vssbu = fft(v_f);
     

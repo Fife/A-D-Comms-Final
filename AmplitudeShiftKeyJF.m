@@ -4,20 +4,20 @@
 
 
 function output = AmplitudeShiftKeyJF(time_window, v_t, f_s)
+resampled = v_t(1:20:end);  
+new_time = time_window(1:20:end);
 
-signal = v_t;
-sampled = round(128*250*signal + 127);
 
-smalltime = linspace(0, 100e-6, 8);
-carrierOn = sin(2*pi*8000*smalltime);
+smalltime = 0:1/8*0.00025:0.00025 - 1/8*0.00025;
+carrierOn = sin(2*pi*4000*smalltime);
 carrierOff = [0,0,0,0,0,0,0,0];
 
 output=[];
 
 
-for i = 1:length(sampled)
+for i = 1:length(resampled)
     %Convert the current data into a binary string
-    data_bin = dec2bin(sampled(i), 8);
+    data_bin = dec2bin(resampled(i), 8);
 
     %For each character in the binary string
     for j = 1: strlength(data_bin)
@@ -33,8 +33,32 @@ for i = 1:length(sampled)
     end
 end
 
-subplot(2,1,1);plot(output(1:65))
-title("Zoomed in view of first sample. Sample Value = 109")
+
+subplot(4, 2, 1); stairs(new_time, resampled);
+title("Input Signal");
+subplot(4, 2, 3); stairs(resampled(1:4));
+title("Section of Input Signal");
+
+subplot(4, 2, 5); plot(output(1:(32*8) + 1));
+title("Section of ASK Signal");
+axis([0 193 -1.2 1.2]);
+[freq, mag] = spectrum(output, f_s, time_window);
+subplot(4, 2, 7); plot(freq, mag);
+title("Spectrum of ASK Signal");
+
+var = repmat(carrierOn, 1, 8);
+var = horzcat(var, 0);
+
+subplot(3,2,2);plot(time_window(1:65), var)
+title("Zoomed in view of carrier signal for first sample.");
+axis([0 65 -1.2 1.2]);
+axis padded
+subplot(3,2,4);stairs([0,1,1,1,1,0,1,1])
+title("Zoomed in view of data signal for first sample.");
+axis padded
+subplot(3,2,6);plot(output(1:65));
+title("Zoomed in view of ASK Signal for first sample.");
+axis padded
 
 % xlabel('time in seconds')
 % 
