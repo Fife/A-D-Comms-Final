@@ -20,7 +20,8 @@ ylabel("mV");
 
 
 [freq, mag] = spectrum(v_t, f_s, time_window);
-subplot(2,1,2);stem(freq, mag);
+subplot(2,1,2);stem(freq(1:25), mag(1:25));
+axis padded
 title("Single-Sided Spectrum of Signal Signal")
 xlabel("f (Hz)")
 ylabel("|V(f)|")
@@ -47,15 +48,15 @@ DigitalToAnalog(output, time_window, f_s, v_t);
 
 %ASK
 figure
-AmplitudeShiftKeyJF(time_window, output, f_s, f_s_adc)
+ask = AmplitudeShiftKeyJF(time_window, output, f_s, f_s_adc);
 figure
-ASKDemodulation(time_window, output, f_s, f_s_adc)
+ASKDemodulation(time_window, ask, output, f_s, f_s_adc);
 
 %FSK
 figure
 fsk = FrequencyShiftKeyJF(time_window, output, f_s, f_s_adc, v_t);
 figure
-FSKDemod(time_window, fsk, output, f_s, f_s_adc)
+FSKDemod(time_window, fsk, output, f_s, f_s_adc);
 
 
 %BPSK
