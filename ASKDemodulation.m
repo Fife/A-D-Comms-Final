@@ -20,12 +20,12 @@ function ASKDemodulation(time_window, ask_input, adc_input, f_s, f_s_adc)
     xlabel("t (ms)")
     ylabel("Volts (mV)")
 
+
     [freq, mag] = spectrum(demodulated, f_s, time_window);
     subplot(2,3,5);stem(freq(1:60), mag(1:60));
     title("Single-Sided Spectrum of ASKDemodulated Signal")
     xlabel("f (Hz)")
     ylabel("|V(f)|")
-
 
     output = lowpass(demodulated, 3000, f_s, ImpulseResponse="iir",Steepness=0.95);
     subplot(2,3,3);plot(time_window.*1000, output.*1000)

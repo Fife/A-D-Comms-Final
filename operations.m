@@ -10,7 +10,9 @@ terms = 5;
 f_s_adc = 4000;
 
 %Signal Generation: Time Domain and Frequency Domain
-v_t = real(eval(ExponentialFourierSeriesJF(time_window, terms*2)));
+v_t_sym = ExponentialFourierSeriesJF(time_window, terms*2);
+v_t = real(eval(v_t_sym));
+
 
 figure
 subplot(2,1,1);plot(time_window.*1000, v_t.*1000)

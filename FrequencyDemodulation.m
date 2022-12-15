@@ -1,14 +1,10 @@
 %Analog frquency demodulation
-function FM = FrequencyDemodulation(time_window, v_t, fs,vfm)
-    f_c = 2000;
-    %FM Demodulation 
-    FM=diff(vfm);
-    plot(FM);
-    x = linspace(1, 10, 500);
-    n = 10;
-    FMM = FM(1 : 10 : 500);
-    plot(FMM);
-    title("Frequency Demodulation")
-    xlabel("t(ms)")
-    ylabel("v(t)")
+function FrequencyDemodulation(time_window,v_t, fs, vfm)
+    clipped = vfm;
+    clipped(clipped>0.5) = 0.5;
+    clipped(clipped<-0.5) = -0.5;
+    vfm_dif = diff(clipped);
+    vfm_dif = [0 vfm_dif];
+    ddt= lowpass(abs(vfm_dif), 4800, fs, ImpulseResponse="iir",Steepness=0.95);
+    plot(ddt);
 end
