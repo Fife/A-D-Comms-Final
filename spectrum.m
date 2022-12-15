@@ -1,3 +1,6 @@
+%Jacob Fifield 
+%Abddullah Al Kassi
+% CPE 3620 Project 
 function [freq, mag] = spectrum(v_t, fs, time_window)
     Y = real(fft(v_t));   
     L = length(time_window);             % Length of signal

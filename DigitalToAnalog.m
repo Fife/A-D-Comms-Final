@@ -1,3 +1,6 @@
+%Jacob Fifield 
+%Abddullah Al Kassi
+% CPE 3620 Project 
 function DigitalToAnalog(adc_out, time_window, f_s, orig_sig)
     %Decode Digital Signal
     desampled = ((adc_out-127)./128).*0.004;

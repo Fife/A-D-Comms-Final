@@ -1,4 +1,5 @@
-% Jacob Fifield 
+%Jacob Fifield 
+%Abddullah Al Kassi
 % CPE 3620 Project 
 % Exponential Fourier Series Generation 
 

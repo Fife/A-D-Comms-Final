@@ -1,4 +1,5 @@
 %Jacob Fifield 
+%Abddullah Al Kassi
 %CPE 3620 Project 
 %Amplitude Shift Keying
 
@@ -33,26 +34,18 @@ function output = AmplitudeShiftKeyJF(time_window, v_t, f_s, f_s_adc)
     end
     
     
-    subplot(4, 2, 1); stairs(new_time.*1000, resampled);
+    subplot(4, 2, 1); stairs(new_time, resampled);
     title("Input Signal");
-    xlabel("t (ms)")
-    ylabel("8-Bit Word")
-    axis([0 10 0 260])
-
     subplot(4, 2, 3); stairs(resampled(1:4));
     title("Section of Input Signal");
-    xlabel("Sample Number")
-    ylabel("8-Bit Word")
-
-    subplot(4, 2, 5); plot(linspace(0,0.75, 193), output(1:(64*3) + 1));
+    
+    subplot(4, 2, 5); plot(output(1:(32*8) + 1));
     title("Section of ASK Signal");
-    axis([0 0.75 -1.2 1.2]);
-    xlabel("t (ms)")
-
+    axis([0 193 -1.2 1.2]);
     [freq, mag] = spectrum(output, f_s, time_window);
     subplot(4, 2, 7); plot(freq, mag);
     title("Spectrum of ASK Signal");
-    xlabel("F (Hz)")
+    
     var = repmat(carrierOn, 1, 8);
     var = horzcat(var, 0);
     

@@ -1,3 +1,6 @@
+%Jacob Fifield 
+%Abddullah Al Kassi
+% CPE 3620 Project 
 function FourierTransformJF(v_t, f_s, f_start, f_stop)
     if ~exist('f_start', 'var')
         f_start = 1;

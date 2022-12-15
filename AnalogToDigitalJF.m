@@ -1,4 +1,6 @@
-% Jacob Fifield 
+
+%Jacob Fifield 
+%Abddullah Al Kassi
 % CPE 3620 Project 
 % Analog to Digital- Eight Bit Sampling
 
@@ -20,31 +22,27 @@ function [time, output] = AnalogToDigitalJF(time_window, v_t, f_s, f_s_adc)
     title("Input Signal")
     xlabel("t (ms)")
     ylabel("mV")
-    axis([0 10 -4.2 4.2])
 
     [freq, mag] = spectrum(signal, f_s, time_window);
     subplot(2,2,2);stem(freq(1:60), mag(1:60));
     title("Single-Sided Spectrum of Signal")
     xlabel("f (Hz)")
     ylabel("|V(f)|")
-
     
     %Sampled Plot
     subplot(4,2,3);stem(time_window*1000, sample_signal)
     title("Periodic Sampling Impluse of 4kHz")
     xlabel("t (ms)")
     ylabel("Logic Level")
-    axis([0 10 0 1.2])
 
 
     new_ts = (1:1:length(sampled)).*0.2;
     time = new_ts;
 
-    subplot(4,2,5);stairs(new_ts./32, sampled.*1000)
+    subplot(4,2,5);stairs(new_ts, sampled.*1000)
     title("Sampled Signal")
     xlabel("t (ms)")
     ylabel("mV")
-    axis([0 10 -4.2 4.2])
 
     %Resample Signal to original timescale and encode to Digital 
 
@@ -60,12 +58,10 @@ function [time, output] = AnalogToDigitalJF(time_window, v_t, f_s, f_s_adc)
     
     output = nz_sampled;
 
-    subplot(4,2,7);stairs(time_window.*1000, nz_sampled);
+    subplot(4,2,7);stairs(time_window, nz_sampled);
     title("Quantized 8-Bit PCM Signal- Unipolar Encoding")
     ylabel("PCM Word")
     xlabel("t (ms)")
-    axis([0 10 0 260])
-
 
 end
 

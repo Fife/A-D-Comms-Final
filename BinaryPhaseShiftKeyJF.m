@@ -1,5 +1,6 @@
 %Jacob Fifield 
-%CPE 3620 Project 
+%Abddullah Al Kassi
+% CPE 3620 Project 
 %Binary Phase Shift Keying
 
 function output = BinaryPhaseShiftKeyJF(t, adc_input, f_s, f_s_adc, orig)
@@ -34,30 +35,23 @@ function output = BinaryPhaseShiftKeyJF(t, adc_input, f_s, f_s_adc, orig)
         end
     end
 
-    subplot(4, 2, 1); plot(t.*1000, orig.*1000);
+    figure
+    subplot(4, 2, 1); plot(orig);
     title("Original Input Signal");
-    xlabel("t (ms)")
-    xlabel("Volts (mV)")
 
     [freq, mag] = spectrum(orig, f_s, t);
-    subplot(2,2,2); stem(freq(1:60), mag(1:60))
+    subplot(2,2,2); stem(freq, mag)
     title("Single-Sided Spectrum of Input Signal")
     xlabel("f (Hz)")
     ylabel("|V(f)|")
 
-    subplot(4, 2, 3); stairs(linspace(0, 10, 40), sampled);
+    subplot(4, 2, 3); stairs(sampled);
     title("Sampled Input Signal");
-    xlabel("t (ms)")
-    ylabel("8-Bit Word")
-    axis([0 10 0 260])
-
-
+    axis([0 40 0 255])
     subplot(4,2,5);stairs(sampled(1:3))
-    title("Section of Sampled Signal");
-    xlabel("t (ms)")
-    ylabel("8-Bit Word")
     axis([1 3 120 138])
 
+    title("Section of Sampled Signal");
     subplot(4,2,7);plot(t(1:640), output(1:640))
     title("Section of BPSK Signal");
 

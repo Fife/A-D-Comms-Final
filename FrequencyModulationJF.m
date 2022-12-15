@@ -1,13 +1,15 @@
 %Jacob Fifield 
-%CPE 3620 Project 
+%Abddullah Al Kassi
+% CPE 3620 Project 
 %Frequency Modulation
 
-function vfm = FrequencyModulationJF(time_window, v_t, f_s)
-    fm = 5000;
-    signal = 10.*v_t;
-    vc = cos(2*pi*fm*time_window);
+function vfm = FrequencyModulationJF(time_window, v_t, fs)
+    fm = 2000;
+    signal = 250.*v_t;
+    vc = sin(2*pi*fm*time_window);
+
     %Frequency Modulation 
-    vfm = cos(2*pi*fm*time_window+40*signal);
+    vfm = sin(2*pi*fm*time_window + signal);
     
     %Time Domain Plots
     subplot(3,2,1);plot(time_window.*1000, signal)
@@ -26,22 +28,29 @@ function vfm = FrequencyModulationJF(time_window, v_t, f_s)
     ylabel("v(t)")
 
     %Frequency Domain Input Signal
-    [freq, mag] = spectrum(v_t, f_s, time_window);
-    subplot(3,2,2);stem(freq(1:60), mag(1:60));
-    title("Single-Sided Spectrum of Input Signal")
+    vf = fft(v_t);
+    f = (0:length(vfm)-1)*fs/length(vfm);   % Frequency Window
+    v_fsub = abs(vf);
+    subplot(3,2,2); stem(f(1:20), v_fsub(1:20))
+    title("Single-Sided Amplitude Spectrum of Input Signal")
     xlabel("f (Hz)")
     ylabel("|V(f)|")
 
     %Frequency Domain Carrier Signal
-    [freq, mag] = spectrum(vc, f_s, time_window);
-    subplot(3,2,4);stem(freq(1:100), mag(1:100));
+    vfc = fft(vc);
+    f = (0:length(vfc)-1)*fs/length(vfc);   % Frequency Window
+    v_c = abs(vfc);
+    subplot(3,2,4); stem(f(1:40), v_c(1:40))
     title("Single-Sided Amplitude Spectrum of Carrier Signal")
     xlabel("f (Hz)")
     ylabel("|V(f)|")
 
     %Frequency Domain FM Signal
-    [freq, mag] = spectrum(vfm, f_s, time_window);
-    subplot(3,2,6);stem(freq(1:100), mag(1:100));
+    n = length(vfm);
+    Y = fft(vfm, n);
+    F = ((0:1/n:1-1/n)*fs).';
+    Vmag = abs(Y);
+    subplot(3,2,6); stem(F(1:40), Vmag(1:40))
     title("Single-Sided Amplitude Spectrum of FM signal")
     xlabel("f (Hz)")
     ylabel("|V(f)|")

@@ -1,6 +1,7 @@
 %Jacob Fifield 
-%CPE 3620 Project 
-%Quadriphase Shift Keying
+%Abddullah Al Kassi
+% CPE 3620 Project 
+
 clc
 clear
 
